@@ -14,6 +14,6 @@ const navItem = props => {
 export default navItem;
 
 navItem.propTypes = {
-  link: PropTypes.func.isRequired,
-  active: PropTypes.bool.isRequired,
+  link: PropTypes.string.isRequired,
+  active: PropTypes.bool,
 };

@@ -7,7 +7,7 @@ class OrderSummary extends React.PureComponent {
   /**
    *  this component can be a function component. This is only to debug purposes. */
   componentWillUpdate() {
-    console.log("Summary updated");
+    // console.log("Summary updated");
   }
   render() {
     const summary = Object.keys(this.props.ingredients).map(key => (

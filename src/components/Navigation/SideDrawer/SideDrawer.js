@@ -5,6 +5,7 @@ import BackDrop from "../../UI/BackDrop/BackDrop";
 import Aux from "../../../hoc/Aux/Aux";
 
 import classes from "./SideDrawer.css";
+import PropTypes from "prop-types";
 
 const sideDrawer = props => {
   const attachedClasses = [classes.SideDrawer];
@@ -30,3 +31,8 @@ const sideDrawer = props => {
 };
 
 export default sideDrawer;
+
+sideDrawer.propTypes = {
+  open: PropTypes.bool.isRequired,
+  closed: PropTypes.func.isRequired,
+};

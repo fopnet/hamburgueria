@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./NavigationItems.css";
 import NavItem from "./NavigationItem/NavigationItem";
 
-const navItems = props => {
+const navItems = () => {
   return (
     <ul className={classes.NavigationItems}>
       <NavItem link="/" active>

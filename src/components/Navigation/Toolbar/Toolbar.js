@@ -3,6 +3,8 @@ import classes from "./Toolbar.css";
 import Logo from "../../Logo/Logo";
 import NavItems from "../NavigationItems/NavigationItems";
 import DrawerToogle from "../SideDrawer/DrawerToogle/DrawerToogle";
+import PropTypes from "prop-types";
+
 const toolBar = props => {
   return (
     <header className={classes.Toolbar}>
@@ -18,3 +20,7 @@ const toolBar = props => {
 };
 
 export default toolBar;
+
+toolBar.propTypes = {
+  toogled: PropTypes.func.isRequired,
+};

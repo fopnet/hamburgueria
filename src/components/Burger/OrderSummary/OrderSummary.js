@@ -1,5 +1,6 @@
 import React from "react";
-import Aux from "../../../hoc/Aux/Aux";
+// import Aux from "../../../hoc/Aux/Aux";
+import classes from "./OrderSummary.css";
 import Button from "../../UI/Button/Button";
 import PropTypes from "prop-types";
 
@@ -18,7 +19,7 @@ class OrderSummary extends React.PureComponent {
     ));
 
     return (
-      <Aux>
+      <div className={classes.OrderSummary}>
         <h3>Your Order</h3>
         <p>A delicioous burger with folowing ingredients:</p>
         {summary}
@@ -32,7 +33,7 @@ class OrderSummary extends React.PureComponent {
         <Button btnType="Success" clicked={this.props.purchaseContinued}>
           Continue
         </Button>
-      </Aux>
+      </div>
     );
   }
 }

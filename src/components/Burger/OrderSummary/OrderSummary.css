@@ -1,0 +1,7 @@
+.OrderSummary {
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px black;
+  width: 100%;
+  padding: 16px;
+}

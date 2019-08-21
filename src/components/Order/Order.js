@@ -4,6 +4,7 @@ import classes from "./Order.css";
 const order = props => {
   const summary = Object.keys(props.order.ingredients).map((key, i) => (
     <span
+      key={key}
       style={{
         textTransform: "capitalize",
         display: "inline-block",

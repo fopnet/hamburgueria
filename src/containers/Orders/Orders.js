@@ -31,7 +31,7 @@ class Orders extends Component {
     const orders = this.state.loading ? (
       <Spinner />
     ) : this.state.orders.length ? (
-      this.state.orders.map((o, i) => <Order key={o.id} order={o} />)
+      this.state.orders.map(o => <Order key={o.id} order={o} />)
     ) : (
       <h2>Ops, no order has been found.</h2>
     );

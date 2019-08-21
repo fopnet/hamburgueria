@@ -69,26 +69,20 @@ class BuilderBurger extends Component {
   };
 
   purchaseContinueHandler = () => {
-    this.setState({ loading: true });
+    // this.props.history.push("/checkout");
 
-    const order = {
-      ingredients: this.state.ingredients,
-      totalPrice: this.state.totalPrice,
-      customer: {
-        name: "Felipe",
-        email: "fop.net@gmail.com",
-        address: {
-          street: "rua pendanga",
-          zipCode: "59154315",
-          city: "parnamirim",
-        },
-      },
-    };
-    axiosOrder
-      .post("/orders.json", order)
-      .then(resp => console.log(resp))
-      .catch(err => console.error(err))
-      .finally(() => this.setState({ loading: false, purchasing: false }));
+    const queryParams = [];
+    for (let prop in this.state.ingredients) {
+      const q = `${encodeURIComponent(prop)}=${encodeURIComponent(
+        this.state.ingredients[prop],
+      )}`;
+      queryParams.push(q);
+    }
+
+    this.props.history.push({
+      pathname: "checkout",
+      search: "?" + queryParams.join("&"),
+    });
   };
 
   render() {

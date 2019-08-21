@@ -21,7 +21,7 @@ class OrderSummary extends React.PureComponent {
     return (
       <div className={classes.OrderSummary}>
         <h3>Your Order</h3>
-        <p>A delicioous burger with folowing ingredients:</p>
+        <p>A delicious burger with folowing ingredients:</p>
         {summary}
         <p>
           Total Price:<strong> $ {this.props.totalPrice.toFixed(2)}</strong>

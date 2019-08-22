@@ -35,7 +35,6 @@ export const fetchPurchase = (formData, ingredients, totalPrice) => {
       .post("/orders.json", order)
       .then(response => {
         dispatch(purchaseSuccess(response.data));
-        // this.props.history.push("/");
       })
       .catch(error => {
         dispatch(purchaseError(error));

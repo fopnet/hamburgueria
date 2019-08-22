@@ -85,9 +85,9 @@ class BuilderBurger extends Component {
       orderSummary = (
         <OrderSummary
           ingredients={this.props.ings}
+          totalPrice={this.props.totalPrice}
           purchaseCanceled={this.purchaseCancelHandler}
           purchaseContinued={this.purchaseContinueHandler}
-          totalPrice={this.props.totalPrice}
         />
       );
     }

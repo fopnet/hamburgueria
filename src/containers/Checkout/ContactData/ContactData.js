@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
-import Button from "../../../components/UI/Button/Button";
-import Spinner from "../../../components/UI/Spinner/Spinner";
-import classes from "./ContactData.css";
 import axios from "../../../axios-order";
+import Button from "../../../components/UI/Button/Button";
 import Input from "../../../components/UI/Input/Input";
+import Spinner from "../../../components/UI/Spinner/Spinner";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErroHandler";
+import { fetchPurchase } from "../../../store/actions";
+import classes from "./ContactData.css";
 
 class ContactData extends Component {
   state = {
@@ -93,32 +94,22 @@ class ContactData extends Component {
       },
     },
     formIsValid: false,
-    loading: false,
   };
 
   orderHandler = event => {
     event.preventDefault();
-    this.setState({ loading: true });
+    // this.setState({ loading: true });
     const formData = {};
     for (let formElementIdentifier in this.state.orderForm) {
       formData[formElementIdentifier] = this.state.orderForm[
         formElementIdentifier
       ].value;
     }
-    const order = {
-      ingredients: this.props.ingredients,
-      totalPrice: this.props.totalPrice,
-      orderData: formData,
-    };
-    axios
-      .post("/orders.json", order)
-      .then(response => {
-        this.setState({ loading: false });
-        this.props.history.push("/");
-      })
-      .catch(error => {
-        this.setState({ loading: false });
-      });
+    this.props.onFecthPurchase(
+      formData,
+      this.props.ingredients,
+      this.props.totalPrice,
+    );
   };
 
   checkValidity(value, rules) {
@@ -201,7 +192,7 @@ class ContactData extends Component {
         </Button>
       </form>
     );
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />;
     }
     return (
@@ -215,9 +206,20 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totaltotalPrice,
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totaltotalPrice,
+    loading: state.order.loading,
   };
 };
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+  return {
+    onFecthPurchase: (formData, ingredients, totalPrice) =>
+      dispatch(fetchPurchase(formData, ingredients, totalPrice)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withErrorHandler(ContactData, axios));

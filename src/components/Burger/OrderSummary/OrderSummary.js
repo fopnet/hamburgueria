@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 class OrderSummary extends React.PureComponent {
   /**
    *  this component can be a function component. This is only to debug purposes. */
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     // console.log("Summary updated");
   }
   render() {

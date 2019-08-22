@@ -25,7 +25,7 @@ class BuilderBurger extends Component {
     error: null,
   };
 
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     // axiosOrder
     //   .get("/ingredients.json")
     //   .then(resp => {

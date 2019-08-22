@@ -10,16 +10,8 @@ import withErrorHandler from "../../hoc/withErrorHandler/withErroHandler";
 import { connect } from "react-redux";
 import * as actionTypes from "../../store/actions";
 
-const INGREDIENT_PRICE = {
-  salad: 0.5,
-  bacon: 1.0,
-  meat: 2.0,
-  cheese: 1.0,
-};
-
 class BuilderBurger extends Component {
   state = {
-    totalPrice: 0,
     purchasing: false,
     loading: false,
     error: null,
@@ -34,28 +26,6 @@ class BuilderBurger extends Component {
     //   .catch(err => this.setState({ error: err }));
   }
 
-  getNewSate = (val, type) => {
-    const newState = {
-      ...this.state,
-    };
-    newState.ingredients[type] = this.state.ingredients[type] + val;
-    newState.totalPrice =
-      val > 0
-        ? this.state.totalPrice + INGREDIENT_PRICE[type]
-        : this.state.totalPrice - INGREDIENT_PRICE[type];
-    return newState;
-  };
-
-  addIngredientsHandler = type => {
-    const newState = this.getNewSate(1, type);
-
-    this.setState(newState);
-  };
-  removeIngredientsHandler = type => {
-    if (this.props.ings[type] === 0) return;
-    const newState = this.getNewSate(-1, type);
-    this.setState(newState);
-  };
   purchaseHandler = () => {
     this.setState({ purchasing: true });
   };
@@ -65,6 +35,7 @@ class BuilderBurger extends Component {
   };
 
   purchaseContinueHandler = () => {
+    /* using redux instead    
     const queryParams = [];
     for (let prop in this.props.ings) {
       const q = `${encodeURIComponent(prop)}=${encodeURIComponent(
@@ -77,6 +48,8 @@ class BuilderBurger extends Component {
       pathname: "checkout",
       search: "?" + queryParams.join("&"),
     });
+     */
+    this.props.history.push("/checkout");
   };
 
   render() {
@@ -92,11 +65,32 @@ class BuilderBurger extends Component {
     ) : (
       <OrderSummary
         ingredients={this.props.ings}
-        purchaseCanceled={this.state.onIngredientRemoved}
-        purchaseContinued={this.state.onIngredientAdded}
-        totalPrice={this.state.totalPrice}
+        purchaseCanceled={this.purchaseCancelHandler}
+        purchaseContinued={this.purchaseContinueHandler}
+        totalPrice={this.props.totalPrice}
       />
     );
+
+    let burger = this.state.error ? (
+      <p>Ingredients can't be loaded!</p>
+    ) : (
+      <Spinner />
+    );
+
+    if (this.props.ings) {
+      burger = (
+        <Aux>
+          <Burger ingredients={this.props.ings} />
+          <BurgerControls
+            ingredientsAdded={this.props.onIngredientAdded}
+            ingredientsRemoved={this.props.onIngredientRemoved}
+            totalPrice={this.props.totalPrice}
+            disabled={disableInfo}
+            ordered={this.purchaseHandler}
+          />
+        </Aux>
+      );
+    }
 
     return (
       <Aux>
@@ -106,15 +100,7 @@ class BuilderBurger extends Component {
         >
           {orderSummary}
         </Modal>
-
-        <Burger ingredients={this.props.ings} />
-        <BurgerControls
-          ingredientsAdded={this.addIngredientsHandler}
-          ingredientsRemoved={this.removeIngredientsHandler}
-          disabled={disableInfo}
-          totalPrice={this.state.totalPrice}
-          ordered={this.purchaseHandler}
-        />
+        {burger}
       </Aux>
     );
   }
@@ -123,6 +109,7 @@ class BuilderBurger extends Component {
 const mapStateToProps = state => {
   return {
     ings: state.ingredients,
+    totalPrice: state.totalPrice,
   };
 };
 

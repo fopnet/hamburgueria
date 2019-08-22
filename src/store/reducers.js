@@ -1,4 +1,4 @@
-import * as actionsTypes from "./actions";
+import * as actionTypes from "./actions";
 
 const initialState = {
   ingredients: {
@@ -10,23 +10,34 @@ const initialState = {
   totalPrice: 0,
 };
 
+const INGREDIENT_PRICES = {
+  salad: 0.5,
+  bacon: 1.0,
+  meat: 2.0,
+  cheese: 1.0,
+};
+
 const reducer = (state = initialState, action) => {
+  // console.log("reducer state", action);
+
   switch (action.type) {
-    case actionsTypes.ADD_INGREDIENT:
+    case actionTypes.ADD_INGREDIENT:
       return {
-        ...state, // only this do not create a deep clone objects
+        ...state,
         ingredients: {
           ...state.ingredients,
           [action.ingredientName]: state.ingredients[action.ingredientName] + 1,
         },
+        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
       };
-    case actionsTypes.RENOVE_INGREDIENT:
+    case actionTypes.RENOVE_INGREDIENT:
       return {
-        ...state, // only this do not create a deep clone objects
+        ...state,
         ingredients: {
           ...state.ingredients,
           [action.ingredientName]: state.ingredients[action.ingredientName] - 1,
         },
+        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
       };
     default:
       return state;

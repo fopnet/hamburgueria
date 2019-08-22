@@ -44,5 +44,5 @@ OrderSummary.propTypes = {
   purchaseContinued: PropTypes.func.isRequired,
   purchaseCanceled: PropTypes.func.isRequired,
   totalPrice: PropTypes.number.isRequired,
-  ingredients: PropTypes.objectOf(PropTypes.number),
+  ingredients: PropTypes.object,
 };

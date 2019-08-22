@@ -107,7 +107,7 @@ class ContactData extends Component {
     }
     const order = {
       ingredients: this.props.ingredients,
-      price: this.props.price,
+      totalPrice: this.props.totalPrice,
       orderData: formData,
     };
     axios
@@ -216,7 +216,7 @@ class ContactData extends Component {
 const mapStateToProps = state => {
   return {
     ingredients: state.ingredients,
-    price: state.totalPrice,
+    totalPrice: state.totaltotalPrice,
   };
 };
 

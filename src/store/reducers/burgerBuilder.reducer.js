@@ -1,4 +1,5 @@
 import * as actionsTypes from "../actions/actions";
+import { updateObject } from "../../shared/utility";
 
 const initialState = {
   ingredients: null,
@@ -13,39 +14,38 @@ const INGREDIENT_PRICES = {
   cheese: 1.0,
 };
 
+const changeIngredientAmount = (state, action, amount) => {
+  const updatedIngredient = {
+    [action.ingredientName]: state.ingredients[action.ingredientName] + amount,
+  };
+
+  const updatedIngredients = updateObject(state.ingredients, updatedIngredient);
+
+  const updatedState1 = {
+    ingredients: updatedIngredients,
+    totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+  };
+
+  return updateObject(state, updatedState1);
+};
+
 export const builderReducer = (state = initialState, action) => {
   // console.log("reducer state", action);
 
   switch (action.type) {
     case actionsTypes.ADD_INGREDIENT:
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingredientName]: state.ingredients[action.ingredientName] + 1,
-        },
-        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
-      };
+      return changeIngredientAmount(state, action, +1);
     case actionsTypes.RENOVE_INGREDIENT:
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingredientName]: state.ingredients[action.ingredientName] - 1,
-        },
-        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
-      };
+      return changeIngredientAmount(state, action, -1);
     case actionsTypes.SET_INGREDIENT:
-      return {
-        ...state,
+      return updateObject(state, {
         ingredients: action.ingredients,
+        totalPrice: action.totalPrice,
         error: null,
-      };
+      });
     case actionsTypes.FETCH_FAILURE:
-      return {
-        ...state,
-        error: action.error,
-      };
+      return updateObject(state, { error: action.error });
+
     default:
       return state;
   }

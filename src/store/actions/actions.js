@@ -7,3 +7,6 @@ export const FETCH_FAILURE = "FETCH_FAILURE";
 export const PURCHASE_INIT = "PURCHASE_INIT";
 export const PURCHASE_SUCCESS = "PURCHASE_SUCCESS";
 export const FETCH_PURCHASE = "FETCH_PURCHASE";
+
+export const FETCH_ORDERS = "FETCH_ORDERS";
+export const SET_ORDERS = "SET_ORDERS";

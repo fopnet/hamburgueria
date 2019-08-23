@@ -7,6 +7,7 @@ const setIngredients = ingredients => {
     return dispatch({
       type: actionsTypes.SET_INGREDIENT,
       ingredients: ingredients,
+      totalPrice: 0,
     });
   };
 };

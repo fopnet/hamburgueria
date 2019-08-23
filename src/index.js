@@ -7,11 +7,12 @@ import thunk from "redux-thunk";
 import App from "./App";
 import "./index.css";
 import registerServiceWorker from "./registerServiceWorker";
-import { orderReducer, builderReducer } from "./store/reducers/";
+import { orderReducer, builderReducer, authReducer } from "./store/reducers/";
 
 const rootReducers = combineReducers({
   order: orderReducer,
   burgerBuilder: builderReducer,
+  auth: authReducer,
 });
 const store = createStore(rootReducers, applyMiddleware(thunk));
 

@@ -10,3 +10,6 @@ export const FETCH_PURCHASE = "FETCH_PURCHASE";
 
 export const FETCH_ORDERS = "FETCH_ORDERS";
 export const SET_ORDERS = "SET_ORDERS";
+
+export const LOGIN = "LOGIN";
+export const LOGGED = "LOGGED";

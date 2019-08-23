@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from "../../../axios-order";
 import Button from "../../../components/UI/Button/Button";
-import Input from "../../../components/UI/Input/Input";
+import axios from "../../../axios-order";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErroHandler";
 import { fetchPurchase } from "../../../store/actions";
 import classes from "./ContactData.css";
-import {checkValidity} from "../../../shared/utility";
+import { generateInputForm, generateFormData } from "../../../shared/utility";
 
 class ContactData extends Component {
   state = {
@@ -99,22 +98,16 @@ class ContactData extends Component {
 
   orderHandler = event => {
     event.preventDefault();
-    // this.setState({ loading: true });
-    const formData = {};
-    for (let formElementIdentifier in this.state.orderForm) {
-      formData[formElementIdentifier] = this.state.orderForm[
-        formElementIdentifier
-      ].value;
-    }
+
+    const formData = generateFormData(this.state.orderForm);
+
     this.props.onFecthPurchase(
       formData,
       this.props.ingredients,
       this.props.totalPrice,
     );
   };
-
-  
-
+  /* 
   inputChangedHandler = (event, inputIdentifier) => {
     const updatedOrderForm = {
       ...this.state.orderForm,
@@ -136,29 +129,20 @@ class ContactData extends Component {
     }
     this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
   };
+ */
+  setStateCallback = (updatedOrderForm, formIsValid) => {
+    this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
+  };
 
   render() {
-    const formElementsArray = [];
-    for (let key in this.state.orderForm) {
-      formElementsArray.push({
-        id: key,
-        config: this.state.orderForm[key],
-      });
-    }
+    const inputForm = generateInputForm(
+      this.state.orderForm,
+      this.setStateCallback,
+    );
+
     let form = (
       <form onSubmit={this.orderHandler}>
-        {formElementsArray.map(formElement => (
-          <Input
-            key={formElement.id}
-            elementType={formElement.config.elementType}
-            elementConfig={formElement.config.elementConfig}
-            value={formElement.config.value}
-            invalid={!formElement.config.valid}
-            shouldValidate={formElement.config.validation}
-            touched={formElement.config.touched}
-            changed={event => this.inputChangedHandler(event, formElement.id)}
-          />
-        ))}
+        {inputForm}
         <Button btnType="Success" disabled={!this.state.formIsValid}>
           ORDER
         </Button>

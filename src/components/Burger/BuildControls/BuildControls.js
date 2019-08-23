@@ -2,6 +2,7 @@ import React from "react";
 import BuildControl from "./BuildControl/BuildControl";
 import classes from "./BuildControls.css";
 import orderClasses from "./OrderButton.css";
+import PropTypes from "prop-types";
 
 const controls = [
   { label: "Salad", type: "salad" },
@@ -30,10 +31,14 @@ const buildControls = props => {
         disabled={props.totalPrice === 0}
         onClick={props.ordered}
       >
-        ORDER NOW
+        {props.isAuth ? "ORDER NOW" : "Please, SignUp to Order !"}
       </button>
     </div>
   );
+};
+
+buildControls.propTypes = {
+  isAuth: PropTypes.bool.isRequired,
 };
 
 export default buildControls;

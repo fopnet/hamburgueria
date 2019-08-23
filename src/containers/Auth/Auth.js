@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 import Button from "../../components/UI/Button/Button";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import { generateInputForm } from "../../shared/utility";
-import { auth } from "../../store/actions/auth.action";
+import { auth, setRedirectPath } from "../../store/actions/auth.action";
 import classes from "./Auth.css";
 import { Redirect } from "react-router-dom";
+
+const ROOT_PATH = "/auth";
 
 class Auth extends Component {
   state = {
@@ -16,7 +18,7 @@ class Auth extends Component {
           type: "email",
           placeholder: "Your e-mail",
         },
-        value: "",
+        value: "fop.net@gmail.com",
         validation: {
           required: true,
           isEmail: true,
@@ -40,7 +42,7 @@ class Auth extends Component {
       },
     },
     formIsValid: false,
-    isSignUp: true,
+    isSignUp: false,
   };
 
   setStateCallback = (updatedForm, formIsValid) => {
@@ -50,8 +52,6 @@ class Auth extends Component {
   loginHandler = event => {
     event.preventDefault();
 
-    // const formData = generateFormData(this.state.loginForm);
-    console.log("isSignUp", this.state.isSignUp);
     this.props.onAuth(
       this.state.loginForm.email.value,
       this.state.loginForm.password.value,
@@ -67,6 +67,12 @@ class Auth extends Component {
     });
   };
 
+  componentDidMount() {
+    if (!this.props.buiding && this.props.authRedirectPath !== ROOT_PATH) {
+      this.props.setRedirectPath();
+    }
+  }
+
   render() {
     const inputForm = this.props.loading ? (
       <Spinner />
@@ -79,10 +85,17 @@ class Auth extends Component {
       errorMessage = <p style={{ color: "red" }}>{this.props.error.message}</p>;
     }
 
+    let authRedirect = null;
+    if (this.props.isAuthenticated) {
+      authRedirect = <Redirect to={this.props.authRedirectPath} />;
+    }
+
     return (
       <div className={classes.Auth}>
-        {this.props.token ? <Redirect to="/app" /> : null}
+        {this.props.isAuthenticated ? <Redirect to="/app" /> : null}
+
         <form onSubmit={this.loginHandler}>
+          {authRedirect}
           {errorMessage}
           {inputForm}
           <Button btnType="Success" disabled={!this.state.formIsValid}>
@@ -100,8 +113,10 @@ class Auth extends Component {
 const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
-    token: state.auth.token,
     error: state.auth.error,
+    isAuthenticated: state.auth.token !== null,
+    buiding: state.burgerBuilder.building,
+    authRedirectPath: state.auth.authRedirectPath,
   };
 };
 
@@ -110,6 +125,7 @@ const mapDispatchToProps = dispatch => {
     onAuth: (email, pwd, isSignUp) => {
       dispatch(auth(email, pwd, isSignUp));
     },
+    onSetRedirectPath: () => dispatch(setRedirectPath(ROOT_PATH)),
   };
 };
 

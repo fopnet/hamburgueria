@@ -5,6 +5,7 @@ const initialState = {
   ingredients: null,
   totalPrice: 0,
   error: null,
+  building: false,
 };
 
 const INGREDIENT_PRICES = {
@@ -21,12 +22,13 @@ const changeIngredientAmount = (state, action, amount) => {
 
   const updatedIngredients = updateObject(state.ingredients, updatedIngredient);
 
-  const updatedState1 = {
+  const updatedState = {
     ingredients: updatedIngredients,
     totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+    building: action.building,
   };
 
-  return updateObject(state, updatedState1);
+  return updateObject(state, updatedState);
 };
 
 export const builderReducer = (state = initialState, action) => {

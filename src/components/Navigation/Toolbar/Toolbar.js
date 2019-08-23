@@ -13,7 +13,7 @@ const toolBar = props => {
         <Logo />
       </div>
       <nav className={classes.DeskTopOnly}>
-        <NavItems />
+        <NavItems isAuth={props.isAuth} />
       </nav>
     </header>
   );
@@ -23,4 +23,5 @@ export default toolBar;
 
 toolBar.propTypes = {
   toogled: PropTypes.func.isRequired,
+  isAuth: PropTypes.bool.isRequired
 };

@@ -8,6 +8,7 @@ const setIngredients = ingredients => {
       type: actionsTypes.SET_INGREDIENT,
       ingredients: ingredients,
       totalPrice: 0,
+      building: false,
     });
   };
 };
@@ -26,6 +27,7 @@ export const addIngredient = name => {
   return {
     type: actionsTypes.ADD_INGREDIENT,
     ingredientName: name,
+    building: true,
   };
 };
 
@@ -33,6 +35,7 @@ export const removeIngredient = name => {
   return {
     type: actionsTypes.RENOVE_INGREDIENT,
     ingredientName: name,
+    building: true,
   };
 };
 

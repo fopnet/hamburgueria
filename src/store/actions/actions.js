@@ -1,6 +1,7 @@
 export const ADD_INGREDIENT = "ADD_INGREDIENT";
 export const RENOVE_INGREDIENT = "RENOVE_INGREDIENT";
 export const SET_INGREDIENT = "SET_INGREDIENT";
+export const SET_AUTH_REDIRECT_PATH = "SET_AUTH_REDIRECT_PATH";
 
 export const FETCH_FAILURE = "FETCH_FAILURE";
 
@@ -13,3 +14,4 @@ export const SET_ORDERS = "SET_ORDERS";
 
 export const LOGIN = "LOGIN";
 export const LOGGED = "LOGGED";
+export const LOGOUT = "LOGOUT";

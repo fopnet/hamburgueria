@@ -105,31 +105,10 @@ class ContactData extends Component {
       formData,
       this.props.ingredients,
       this.props.totalPrice,
+      this.props.token,
     );
   };
-  /* 
-  inputChangedHandler = (event, inputIdentifier) => {
-    const updatedOrderForm = {
-      ...this.state.orderForm,
-    };
-    const updatedFormElement = {
-      ...updatedOrderForm[inputIdentifier],
-    };
-    updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = checkValidity(
-      updatedFormElement.value,
-      updatedFormElement.validation,
-    );
-    updatedFormElement.touched = true;
-    updatedOrderForm[inputIdentifier] = updatedFormElement;
 
-    let formIsValid = true;
-    for (let inputIdentifier in updatedOrderForm) {
-      formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
-    }
-    this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
-  };
- */
   setStateCallback = (updatedOrderForm, formIsValid) => {
     this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
   };
@@ -165,13 +144,14 @@ const mapStateToProps = state => {
     ingredients: state.burgerBuilder.ingredients,
     totalPrice: state.burgerBuilder.totalPrice,
     loading: state.order.loading,
+    token: state.auth.token,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFecthPurchase: (formData, ingredients, totalPrice) =>
-      dispatch(fetchPurchase(formData, ingredients, totalPrice)),
+    onFecthPurchase: (formData, ingredients, totalPrice, token) =>
+      dispatch(fetchPurchase(formData, ingredients, totalPrice, token)),
   };
 };
 

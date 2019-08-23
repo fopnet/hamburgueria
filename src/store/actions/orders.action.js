@@ -21,7 +21,7 @@ const fecthPurchase = error => {
   };
 };
 
-export const fetchPurchase = (formData, ingredients, totalPrice) => {
+export const fetchPurchase = (formData, ingredients, totalPrice, token) => {
   const order = {
     ingredients: ingredients,
     totalPrice: totalPrice,
@@ -32,7 +32,7 @@ export const fetchPurchase = (formData, ingredients, totalPrice) => {
     dispatch(fecthPurchase());
 
     axios
-      .post("/orders.json", order)
+      .post("/orders.json?auth=?" + token, order)
       .then(response => {
         dispatch(purchaseSuccess(response.data));
       })
@@ -61,12 +61,12 @@ export const setOrders = orders => {
   };
 };
 
-export const fetchOrders = () => {
+export const fetchOrders = token => {
   return dispatch => {
     dispatch(fetchInit());
 
     axios
-      .get("/orders.json")
+      .get("/orders.json?auth=" + token)
       .then(resp => {
         const orders = [];
         for (let key in resp.data) {

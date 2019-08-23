@@ -4,10 +4,21 @@ const initialState = {
   email: null,
   loading: false,
   error: null,
+  token: null,
+  authRedirectPath: "/auth"
 };
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionsTypes.SET_AUTH_REDIRECT_PATH:
+      return updateObject(state, {
+        authRedirectPath: action.path,
+      });
+    case actionsTypes.LOGOUT:
+      return updateObject(state, {
+        token: action.token,
+        userId: action.userId,
+      });
     case actionsTypes.LOGIN:
       return updateObject(state, {
         loading: action.loading,

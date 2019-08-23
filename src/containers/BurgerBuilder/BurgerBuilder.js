@@ -13,6 +13,7 @@ import {
   removeIngredient,
   initIngredients,
   purchaseInit,
+  setRedirectPath,
 } from "../../store/actions/index";
 
 class BuilderBurger extends Component {
@@ -26,7 +27,12 @@ class BuilderBurger extends Component {
   }
 
   purchaseHandler = () => {
-    this.setState({ purchasing: true });
+    if (this.props.isAuthenticated) {
+      this.setState({ purchasing: true });
+    } else {
+      this.props.onSetRedirect("/checkout");
+      this.props.history.push("/auth");
+    }
   };
 
   purchaseCancelHandler = () => {
@@ -78,6 +84,7 @@ class BuilderBurger extends Component {
             totalPrice={this.props.totalPrice}
             disabled={disableInfo}
             ordered={this.purchaseHandler}
+            isAuth={this.props.isAuthenticated}
           />
         </Aux>
       );
@@ -111,6 +118,7 @@ const mapStateToProps = state => {
     ings: state.burgerBuilder.ingredients,
     totalPrice: state.burgerBuilder.totalPrice,
     error: state.burgerBuilder.error,
+    isAuthenticated: state.auth.token !== null,
   };
 };
 
@@ -120,6 +128,7 @@ const mapDispatchToProps = dispatch => {
     onIngredientRemoved: ingName => dispatch(removeIngredient(ingName)),
     onInitIngredients: () => dispatch(initIngredients()),
     onPurchaseInit: () => dispatch(purchaseInit()),
+    onSetRedirect: path => dispatch(setRedirectPath(path)),
   };
 };
 

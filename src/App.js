@@ -4,6 +4,7 @@ import Layout from "./hoc/Layout/Layout";
 import BuilderBurger from "./containers/BurgerBuilder/BurgerBuilder";
 import { Route, Switch, Redirect } from "react-router-dom";
 import asyncComponent from "./hoc/asyncComponent/asyncComponent";
+import Logout from "./containers/Auth/Logout/Logout";
 
 const asyncCheckout = asyncComponent(() => {
   return import("./containers/Checkout/Checkout");
@@ -26,6 +27,7 @@ class App extends Component {
             <Route path="/orders" component={asyncOrders} />
             <Route path="/checkout" component={asyncCheckout} />
             <Route path="/app" component={BuilderBurger} />
+            <Route path="/logout" component={Logout} />
             <Redirect from="/" to="/auth" />
           </Switch>
         </Layout>

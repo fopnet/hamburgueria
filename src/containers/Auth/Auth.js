@@ -40,7 +40,7 @@ class Auth extends Component {
       },
     },
     formIsValid: false,
-    isSignup: true,
+    isSignUp: true,
   };
 
   setStateCallback = (updatedForm, formIsValid) => {
@@ -51,7 +51,7 @@ class Auth extends Component {
     event.preventDefault();
 
     // const formData = generateFormData(this.state.loginForm);
-
+    console.log("isSignUp", this.state.isSignUp);
     this.props.onAuth(
       this.state.loginForm.email.value,
       this.state.loginForm.password.value,
@@ -61,8 +61,9 @@ class Auth extends Component {
 
   switchSignHandler = event => {
     event.preventDefault();
+
     this.setState(prevState => {
-      return { isSignup: !prevState.isSignup };
+      return { isSignUp: !prevState.isSignUp };
     });
   };
 
@@ -85,10 +86,10 @@ class Auth extends Component {
           {errorMessage}
           {inputForm}
           <Button btnType="Success" disabled={!this.state.formIsValid}>
-            {this.state.isSignup ? "SignUp" : "Sign"}
+            {this.state.isSignUp ? "SignUp" : "Sign"}
           </Button>
           <Button btnType="Danger" clicked={this.switchSignHandler}>
-            Switch to {this.state.isSignup ? "SignIn" : "SignUp"}
+            Switch to {this.state.isSignUp ? "SignIn" : "SignUp"}
           </Button>
         </form>
       </div>

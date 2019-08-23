@@ -5,15 +5,11 @@ import NavItem from "./NavigationItem/NavigationItem";
 const navItems = () => {
   return (
     <ul className={classes.NavigationItems}>
-      <NavItem link="/" active exact>
+      <NavItem link="/app" active exact>
         Burger Builder
       </NavItem>
-      <NavItem link="/orders">
-        Orders
-      </NavItem>
-      <NavItem link="/auth" >
-        Authenticate
-      </NavItem>
+      <NavItem link="/orders">Orders</NavItem>
+      <NavItem link="/auth">Authenticate</NavItem>
     </ul>
   );
 };

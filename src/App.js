@@ -36,6 +36,7 @@ class App extends Component {
           <Route path="/checkout" component={asyncCheckout} />
           <Route path="/app" component={asyncBuilderBurger} />
           <Route path="/logout" component={Logout} />
+          <Route path="/auth" component={asyncAuth} />
         </Switch>
       );
     } else {

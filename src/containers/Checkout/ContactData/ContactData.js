@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
+import { fetchPurchase } from "../../../store/actions";
+import { createInputForm, generateFormData } from "../../../shared/utility";
 import Button from "../../../components/UI/Button/Button";
-import axios from "../../../axios-order";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErroHandler";
-import { fetchPurchase } from "../../../store/actions";
+import axios from "../../../axios-order";
 import classes from "./ContactData.css";
-import { generateInputForm, generateFormData } from "../../../shared/utility";
 
-class ContactData extends Component {
+class ContactData extends React.Component {
   state = {
     orderForm: {
       name: {
@@ -115,7 +115,7 @@ class ContactData extends Component {
   };
 
   render() {
-    const inputForm = generateInputForm(
+    const inputForm = createInputForm(
       this.state.orderForm,
       this.setStateCallback,
     );

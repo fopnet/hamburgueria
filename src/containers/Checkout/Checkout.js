@@ -42,7 +42,7 @@ class Checkout extends React.Component {
 
     if (this.props.ingredients) {
       const purchasedRedirect = this.props.purchased ? (
-        <Redirect to="/" />
+        <Redirect to="/app" />
       ) : null;
 
       summary = (

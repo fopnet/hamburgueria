@@ -81,7 +81,7 @@ const inputChangedHandler = (
   //this.setState({ [formName]: updatedOrderForm, formIsValid: formIsValid });
 };
 
-export const generateInputForm = (formConfig, setStateCallback) => {
+export const createInputForm = (formConfig, setStateCallback) => {
   const formElementsArray = formElementsToArray(formConfig);
 
   return formElementsArray.map(formElement => {

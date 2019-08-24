@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "../../components/UI/Button/Button";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import { generateInputForm } from "../../shared/utility";
+import { createInputForm } from "../../shared/utility";
 import { auth, setRedirectPath } from "../../store/actions/auth.action";
 import classes from "./Auth.css";
 import { Redirect } from "react-router-dom";
@@ -68,7 +68,7 @@ class Auth extends Component {
   };
 
   componentDidMount() {
-    if (!this.props.buiding && this.props.authRedirectPath !== ROOT_PATH) {
+    if (!this.props.buiding && this.props.authRedirectPath !== "/app") {
       console.log("aqui");
       this.props.onSetRedirectPath();
     }
@@ -78,7 +78,7 @@ class Auth extends Component {
     const inputForm = this.props.loading ? (
       <Spinner />
     ) : (
-      generateInputForm(this.state.loginForm, this.setStateCallback)
+      createInputForm(this.state.loginForm, this.setStateCallback)
     );
 
     let errorMessage = null;

@@ -9,7 +9,7 @@ const signUpInit = () => {
   };
 };
 
-const setAuth = (idToken, userId) => {
+const setLoggedState = (idToken, userId) => {
   return {
     type: actionsTypes.LOGGED,
     userId: userId,
@@ -25,19 +25,23 @@ const setError = error => {
     return dispatch({
       type: actionsTypes.FETCH_FAILURE,
       error: error,
+      loading: false,
     });
   };
 };
 
-export const checkTimeOut = expiresIn => {
+export const checkTimeOut = expiresInSeconds => {
   return dispatch => {
     setTimeout(() => {
       dispatch(logout());
-    }, expiresIn * 1000);
+    }, expiresInSeconds * 1000);
   };
 };
 
 export const logout = () => {
+  localStorage.removeItem(actionsTypes.TOKEN_NAME);
+  localStorage.removeItem(actionsTypes.EXPIRES_DATE);
+
   return {
     type: actionsTypes.LOGOUT,
     token: null,
@@ -47,7 +51,7 @@ export const logout = () => {
 export const setRedirectPath = path => {
   return {
     type: actionsTypes.SET_AUTH_REDIRECT_PATH,
-    path: path,
+    authRedirectPath: path,
   };
 };
 
@@ -70,12 +74,50 @@ export const auth = (email, pwd, isSignUp) => {
     return axios
       .post(url, authData)
       .then(resp => {
-        dispatch(setAuth(resp.data.idToken, resp.data.localId));
+        const expirationDate = new Date(
+          new Date().getTime() + +resp.data.expiresIn * 1000,
+        );
+
+        localStorage.setItem(actionsTypes.TOKEN_NAME, resp.data.idToken);
+        localStorage.setItem(actionsTypes.EXPIRES_DATE, expirationDate);
+        /**
+         * Here is not necessery store the localId
+         * It is possible do recover by this api
+         * https://firebase.google.com/docs/reference/rest/auth#section-get-account-info
+         */
+        localStorage.setItem(actionsTypes.TOKEN_USER_ID, resp.data.localId);
+
+        dispatch(setLoggedState(resp.data.idToken, resp.data.localId));
         dispatch(checkTimeOut(resp.data.expiresIn));
       })
       .catch(err => {
         console.error(err.response.data.error);
         dispatch(setError(err.response.data.error));
       });
+  };
+};
+
+export const authCheckState = () => {
+  return dispatch => {
+    const token = localStorage.getItem(actionsTypes.TOKEN_NAME);
+    if (!token) {
+      dispatch(logout());
+    } else {
+      const expirationDate = new Date(
+        localStorage.getItem(actionsTypes.EXPIRES_DATE),
+      );
+      const userId = localStorage.getItem(actionsTypes.TOKEN_USER_ID);
+
+      if (expirationDate > new Date()) {
+        dispatch(setLoggedState(token, userId));
+        dispatch(
+          checkTimeOut(
+            (expirationDate.getTime() - new Date().getTime()) / 1000,
+          ),
+        );
+      } else {
+        dispatch(logout());
+      }
+    }
   };
 };

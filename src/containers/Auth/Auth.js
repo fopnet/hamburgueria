@@ -7,7 +7,7 @@ import { auth, setRedirectPath } from "../../store/actions/auth.action";
 import classes from "./Auth.css";
 import { Redirect } from "react-router-dom";
 
-const ROOT_PATH = "/auth";
+const ROOT_PATH = "/app";
 
 class Auth extends Component {
   state = {
@@ -69,7 +69,8 @@ class Auth extends Component {
 
   componentDidMount() {
     if (!this.props.buiding && this.props.authRedirectPath !== ROOT_PATH) {
-      this.props.setRedirectPath();
+      console.log("aqui");
+      this.props.onSetRedirectPath();
     }
   }
 

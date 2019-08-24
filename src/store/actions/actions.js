@@ -15,3 +15,6 @@ export const SET_ORDERS = "SET_ORDERS";
 export const LOGIN = "LOGIN";
 export const LOGGED = "LOGGED";
 export const LOGOUT = "LOGOUT";
+export const TOKEN_NAME = "BURGER_BUILDER_TOKEN";
+export const EXPIRES_DATE = "BURGER_BUILDER_EXPIRES_DATE";
+export const TOKEN_USER_ID = "BURGER_BUILDER_TOKEN_USER";

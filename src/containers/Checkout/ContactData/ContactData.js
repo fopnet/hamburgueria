@@ -106,6 +106,7 @@ class ContactData extends Component {
       this.props.ingredients,
       this.props.totalPrice,
       this.props.token,
+      this.props.userId,
     );
   };
 
@@ -145,13 +146,14 @@ const mapStateToProps = state => {
     totalPrice: state.burgerBuilder.totalPrice,
     loading: state.order.loading,
     token: state.auth.token,
+    userId: state.auth.userId,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFecthPurchase: (formData, ingredients, totalPrice, token) =>
-      dispatch(fetchPurchase(formData, ingredients, totalPrice, token)),
+    onFecthPurchase: (formData, ingredients, totalPrice, token, uid) =>
+      dispatch(fetchPurchase(formData, ingredients, totalPrice, token, uid)),
   };
 };
 

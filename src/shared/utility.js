@@ -116,4 +116,5 @@ export const generateFormData = formConfig => {
   for (let formElementIdentifier in formConfig) {
     formData[formElementIdentifier] = formConfig[formElementIdentifier].value;
   }
+  return formData;
 };

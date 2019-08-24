@@ -17,7 +17,7 @@ class Auth extends Component {
           type: "email",
           placeholder: "Your e-mail",
         },
-        value: "fop.net@gmail.com",
+        value: "",
         validation: {
           required: true,
           isEmail: true,

@@ -6,8 +6,7 @@ import { createInputForm } from "../../shared/utility";
 import { auth, setRedirectPath } from "../../store/actions/auth.action";
 import classes from "./Auth.css";
 import { Redirect } from "react-router-dom";
-
-const ROOT_PATH = "/app";
+import * as routesPath from "../../shared/routes";
 
 class Auth extends Component {
   state = {
@@ -68,7 +67,10 @@ class Auth extends Component {
   };
 
   componentDidMount() {
-    if (!this.props.buiding && this.props.authRedirectPath !== "/app") {
+    if (
+      !this.props.buiding &&
+      this.props.authRedirectPath !== routesPath.HOME_ROUTE
+    ) {
       console.log("aqui");
       this.props.onSetRedirectPath();
     }
@@ -93,7 +95,9 @@ class Auth extends Component {
 
     return (
       <div className={classes.Auth}>
-        {this.props.isAuthenticated ? <Redirect to="/app" /> : null}
+        {this.props.isAuthenticated ? (
+          <Redirect to={routesPath.HOME_ROUTE} />
+        ) : null}
 
         <form onSubmit={this.loginHandler}>
           {authRedirect}
@@ -126,7 +130,7 @@ const mapDispatchToProps = dispatch => {
     onAuth: (email, pwd, isSignUp) => {
       dispatch(auth(email, pwd, isSignUp));
     },
-    onSetRedirectPath: () => dispatch(setRedirectPath(ROOT_PATH)),
+    onSetRedirectPath: () => dispatch(setRedirectPath(routesPath.HOME_ROUTE)),
   };
 };
 

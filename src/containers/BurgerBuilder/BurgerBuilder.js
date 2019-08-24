@@ -8,6 +8,8 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import Aux from "../../hoc/Aux/Aux";
 import withErrorHandler from "../../hoc/withErrorHandler/withErroHandler";
 import axios from "../../axios-order";
+import * as routesPath from "../../shared/routes";
+
 import {
   addIngredient,
   removeIngredient,
@@ -30,8 +32,8 @@ class BuilderBurger extends Component {
     if (this.props.isAuthenticated) {
       this.setState({ purchasing: true });
     } else {
-      this.props.onSetRedirect("/checkout");
-      this.props.history.push("/auth");
+      this.props.onSetRedirect(routesPath.CHECKOUT_ROUTE);
+      this.props.history.push(routesPath.LOGIN_ROUTE);
     }
   };
 
@@ -41,7 +43,7 @@ class BuilderBurger extends Component {
 
   purchaseContinueHandler = () => {
     this.props.onPurchaseInit();
-    this.props.history.push("/checkout");
+    this.props.history.push(routesPath.CHECKOUT_ROUTE);
 
     /* using redux instead    
     const queryParams = [];

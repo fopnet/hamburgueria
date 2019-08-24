@@ -1,11 +1,12 @@
 import * as actionsTypes from "../actions/actions";
 import { updateObject } from "../../shared/utility";
+import * as routesPath from "../../shared/routes";
 const initialState = {
   email: null,
   loading: false,
   error: null,
   token: null,
-  authRedirectPath: "/app",
+  authRedirectPath: routesPath.HOME_ROUTE,
 };
 
 export const authReducer = (state = initialState, action) => {

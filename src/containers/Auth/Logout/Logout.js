@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { logout } from "../../../store/actions";
+import * as routesPath from "../../../shared/routes";
 
 class Logout extends Component {
   componentDidMount() {
@@ -9,7 +10,7 @@ class Logout extends Component {
   }
 
   render() {
-    return <Redirect to="/app" />;
+    return <Redirect to={routesPath.HOME_ROUTE} />;
   }
 }
 

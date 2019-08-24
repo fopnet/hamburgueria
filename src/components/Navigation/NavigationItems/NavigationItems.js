@@ -2,18 +2,21 @@ import React from "react";
 import classes from "./NavigationItems.css";
 import NavItem from "./NavigationItem/NavigationItem";
 import PropTypes from "prop-types";
+import * as routesPath from "../../../shared/routes";
 
 const navItems = props => {
   return (
     <ul className={classes.NavigationItems}>
-      <NavItem link="/app" active exact>
+      <NavItem link={routesPath.HOME_ROUTE} active exact>
         Burger Builder
       </NavItem>
-      {props.isAuth ? <NavItem link="/orders">Orders</NavItem> : null}
       {props.isAuth ? (
-        <NavItem link="/logout">Logout</NavItem>
+        <NavItem link={routesPath.ORDERS_ROUTE}>Orders</NavItem>
+      ) : null}
+      {props.isAuth ? (
+        <NavItem link={routesPath.LOGOUT_ROUTE}>Logout</NavItem>
       ) : (
-        <NavItem link="/auth">Authenticate</NavItem>
+        <NavItem link={routesPath.LOGIN_ROUTE}>Authenticate</NavItem>
       )}
     </ul>
   );

@@ -1,11 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
+import { authCheckState } from "./store/actions/index";
 import Logout from "./containers/Auth/Logout/Logout";
 import asyncComponent from "./hoc/asyncComponent/asyncComponent";
 import Layout from "./hoc/Layout/Layout";
+import * as routesPath from "./shared/routes";
+
 import "./index.css";
-import { authCheckState } from "./store/actions/index";
 
 const asyncCheckout = asyncComponent(() => {
   return import("./containers/Checkout/Checkout");
@@ -22,7 +24,7 @@ const asyncBuilderBurger = asyncComponent(() => {
   return import("./containers/BurgerBuilder/BurgerBuilder");
 });
 
-class App extends Component {
+class App extends React.Component {
   componentDidMount() {
     this.props.onTrySignup();
   }
@@ -32,19 +34,19 @@ class App extends Component {
     if (this.props.isAuthenticated) {
       routes = (
         <Switch>
-          <Route path="/orders" component={asyncOrders} />
-          <Route path="/checkout" component={asyncCheckout} />
-          <Route path="/app" component={asyncBuilderBurger} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/auth" component={asyncAuth} />
+          <Route path={routesPath.ORDERS_ROUTE} component={asyncOrders} />
+          <Route path={routesPath.CHECKOUT_ROUTE} component={asyncCheckout} />
+          <Route path={routesPath.HOME_ROUTE} component={asyncBuilderBurger} />
+          <Route path={routesPath.LOGOUT_ROUTE} component={Logout} />
+          <Route path={routesPath.LOGIN_ROUTE} component={asyncAuth} />
         </Switch>
       );
     } else {
       routes = (
         <Switch>
-          <Route path="/auth" component={asyncAuth} />
-          <Route path="/app" component={asyncBuilderBurger} />
-          <Redirect from="/" to="/app" />
+          <Route path={routesPath.LOGIN_ROUTE} component={asyncAuth} />
+          <Route path={routesPath.HOME_ROUTE} component={asyncBuilderBurger} />
+          <Redirect from="/" to={routesPath.HOME_ROUTE} />
         </Switch>
       );
     }

@@ -4,6 +4,7 @@ import ContactData from "./ContactData/ContactData";
 import PropTypes from "prop-types";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import * as routesPath from "../../shared/routes";
 
 class Checkout extends React.Component {
   /*
@@ -42,7 +43,7 @@ class Checkout extends React.Component {
 
     if (this.props.ingredients) {
       const purchasedRedirect = this.props.purchased ? (
-        <Redirect to="/app" />
+        <Redirect to={routesPath.HOME_ROUTE} />
       ) : null;
 
       summary = (

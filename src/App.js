@@ -1,25 +1,76 @@
-import React, { Component } from "react";
-import "./index.css";
+import React from "react";
+import { connect } from "react-redux";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { authCheckState } from "./store/actions/index";
+import Logout from "./containers/Auth/Logout/Logout";
+import asyncComponent from "./hoc/asyncComponent/asyncComponent";
 import Layout from "./hoc/Layout/Layout";
-import BuilderBurger from "./containers/BurgerBuilder/BurgerBuilder";
-import Checkout from "./containers/Checkout/Checkout";
-import Orders from "./containers/Orders/Orders";
-import { Route, Switch } from "react-router-dom";
+import * as routesPath from "./shared/routes";
 
-class App extends Component {
+import "./index.css";
+
+const asyncCheckout = asyncComponent(() => {
+  return import("./containers/Checkout/Checkout");
+});
+const asyncAuth = asyncComponent(() => {
+  return import("./containers/Auth/Auth");
+});
+
+const asyncOrders = asyncComponent(() => {
+  return import("./containers/Orders/Orders");
+});
+
+const asyncBuilderBurger = asyncComponent(() => {
+  return import("./containers/BurgerBuilder/BurgerBuilder");
+});
+
+class App extends React.Component {
+  componentDidMount() {
+    this.props.onTrySignup();
+  }
+
   render() {
+    let routes = null;
+    if (this.props.isAuthenticated) {
+      routes = (
+        <Switch>
+          <Route path={routesPath.ORDERS_ROUTE} component={asyncOrders} />
+          <Route path={routesPath.CHECKOUT_ROUTE} component={asyncCheckout} />
+          <Route path={routesPath.HOME_ROUTE} component={asyncBuilderBurger} />
+          <Route path={routesPath.LOGOUT_ROUTE} component={Logout} />
+          <Route path={routesPath.LOGIN_ROUTE} component={asyncAuth} />
+        </Switch>
+      );
+    } else {
+      routes = (
+        <Switch>
+          <Route path={routesPath.LOGIN_ROUTE} component={asyncAuth} />
+          <Route path={routesPath.HOME_ROUTE} component={asyncBuilderBurger} />
+          <Redirect from="/" to={routesPath.HOME_ROUTE} />
+        </Switch>
+      );
+    }
+
     return (
       <div>
-        <Layout>
-          <Switch>
-            <Route path="/orders" component={Orders} />
-            <Route path="/checkout" component={Checkout} />
-            <Route path="/" exact component={BuilderBurger} />
-          </Switch>
-        </Layout>
+        <Layout>{routes}</Layout>
       </div>
     );
   }
 }
 
-export default App;
+const mapStarteToProps = state => {
+  return {
+    isAuthenticated: state.auth.token != null,
+  };
+};
+const mapDispathToProps = dispath => {
+  return {
+    onTrySignup: () => dispath(authCheckState()),
+  };
+};
+
+export default connect(
+  mapStarteToProps,
+  mapDispathToProps,
+)(App);

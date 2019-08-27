@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 class OrderSummary extends React.PureComponent {
   /**
    *  this component can be a function component. This is only to debug purposes. */
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     // console.log("Summary updated");
   }
   render() {
@@ -44,5 +44,5 @@ OrderSummary.propTypes = {
   purchaseContinued: PropTypes.func.isRequired,
   purchaseCanceled: PropTypes.func.isRequired,
   totalPrice: PropTypes.number.isRequired,
-  ingredients: PropTypes.objectOf(PropTypes.number),
+  ingredients: PropTypes.object,
 };

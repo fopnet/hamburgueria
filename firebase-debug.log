@@ -1,0 +1,23 @@
+[debug] [2019-08-24T02:04:43.948Z] ----------------------------------------------------------------------
+[debug] [2019-08-24T02:04:43.950Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2019-08-24T02:04:43.950Z] CLI Version:   7.2.4
+[debug] [2019-08-24T02:04:43.950Z] Platform:      darwin
+[debug] [2019-08-24T02:04:43.950Z] Node Version:  v8.11.3
+[debug] [2019-08-24T02:04:43.951Z] Time:          Fri Aug 23 2019 23:04:43 GMT-0300 (-03)
+[debug] [2019-08-24T02:04:43.951Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-08-24T02:04:43.958Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-08-24T02:04:43.958Z] > authorizing via signed-in user
+[debug] [2019-08-24T02:04:43.958Z] [iam] checking project hamburgueria-75c22 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-08-24T02:04:43.960Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/hamburgueria-75c22:testIamPermissions  
+
+[debug] [2019-08-24T02:04:45.120Z] <<< HTTP RESPONSE 200
+[debug] [2019-08-24T02:04:45.122Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/hamburgueria-75c22  
+ 
+[debug] [2019-08-24T02:04:46.476Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'hamburgueria-75c22'...
+[info] 
+[info] i  deploying hosting
+[error] 
+[error] Error: Specified public directory 'build' does not exist, can't deploy hosting to site hamburgueria-75c22

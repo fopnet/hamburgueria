@@ -1,95 +1,163 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { fetchPurchase } from "../../../store/actions";
+import { createInputForm, generateFormData } from "../../../shared/utility";
 import Button from "../../../components/UI/Button/Button";
-import classes from "./ContactData.css";
-import axios from "../../../axios-order";
 import Spinner from "../../../components/UI/Spinner/Spinner";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErroHandler";
+import axios from "../../../axios-order";
+import classes from "./ContactData.css";
 
 class ContactData extends React.Component {
   state = {
-    name: "",
-    email: "",
-    address: {},
-    loading: false,
+    orderForm: {
+      name: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your Name",
+        },
+        value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
+      },
+      street: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Street",
+        },
+        value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
+      },
+      zipCode: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "ZIP Code",
+        },
+        value: "",
+        validation: {
+          required: true,
+          minLength: 8,
+          maxLength: 8,
+          isNumeric: true,
+        },
+        valid: false,
+        touched: false,
+      },
+      country: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Country",
+        },
+        value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
+      },
+      email: {
+        elementType: "input",
+        elementConfig: {
+          type: "email",
+          placeholder: "Your E-Mail",
+        },
+        value: "",
+        validation: {
+          required: true,
+          isEmail: true,
+        },
+        valid: false,
+        touched: false,
+      },
+      deliveryMethod: {
+        elementType: "select",
+        elementConfig: {
+          options: [
+            { value: "fastest", displayValue: "Fastest" },
+            { value: "cheapest", displayValue: "Cheapest" },
+          ],
+        },
+        value: "",
+        validation: {},
+        valid: true,
+      },
+    },
+    formIsValid: false,
   };
 
-  orderHandler = e => {
-    e.preventDefault();
+  orderHandler = event => {
+    event.preventDefault();
 
-    this.setState({ loading: true });
+    const formData = generateFormData(this.state.orderForm);
 
-    // console.log(this.props.ingredients);
+    this.props.onFecthPurchase(
+      formData,
+      this.props.ingredients,
+      this.props.totalPrice,
+      this.props.token,
+      this.props.userId,
+    );
+  };
 
-    const order = {
-      ingredients: this.props.ingredients,
-      totalPrice: this.props.totalPrice,
-      customer: {
-        name: "Felipe",
-        email: "fop.net@gmail.com",
-        address: {
-          street: "rua pendanga",
-          zipCode: "59154315",
-          city: "parnamirim",
-        },
-      },
-    };
-    axios
-      .post("/orders.json", order)
-      .then(resp => setTimeout(() => this.props.history.push("/"), 100))
-      .catch(err => console.error(err))
-      .finally(() => this.setState({ loading: false }));
+  setStateCallback = (updatedOrderForm, formIsValid) => {
+    this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
   };
 
   render() {
+    const inputForm = createInputForm(
+      this.state.orderForm,
+      this.setStateCallback,
+    );
+
     let form = (
-      <form>
-        <input
-          className={classes.Input}
-          type="text"
-          name="name"
-          placeholder="Name"
-        />
-        <input
-          className={classes.Input}
-          type="text"
-          name="email"
-          placeholder="Email"
-        />
-        <input
-          className={classes.Input}
-          type="text"
-          name="street"
-          placeholder="Street"
-        />
-        <input
-          className={classes.Input}
-          type="text"
-          name="zipCode"
-          placeholder="ZipCode"
-        />
-        <Button btnType="Success" clicked={this.orderHandler}>
+      <form onSubmit={this.orderHandler}>
+        {inputForm}
+        <Button btnType="Success" disabled={!this.state.formIsValid}>
           ORDER
         </Button>
       </form>
     );
-
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />;
     }
-
     return (
       <div className={classes.ContactData}>
-        <h4>Enter your contact data</h4>
+        <h4>Enter your Contact Data</h4>
         {form}
       </div>
     );
   }
 }
 
-ContactData.propTypes = {
-  orderSubmitted: PropTypes.func,
-  ingredients: PropTypes.object,
-  totalPrice: PropTypes.number,
+const mapStateToProps = state => {
+  return {
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice,
+    loading: state.order.loading,
+    token: state.auth.token,
+    userId: state.auth.userId,
+  };
 };
 
-export default ContactData;
+const mapDispatchToProps = dispatch => {
+  return {
+    onFecthPurchase: (formData, ingredients, totalPrice, token, uid) =>
+      dispatch(fetchPurchase(formData, ingredients, totalPrice, token, uid)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withErrorHandler(ContactData, axios));

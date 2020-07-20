@@ -1,9 +1,6 @@
 node_modules/*
 .DS_Store/*
 package-lock.json
-<<<<<<< HEAD
-build/
-=======
-/build
-/npdist
->>>>>>> webpack-structure
+dist/
+.firebase
+

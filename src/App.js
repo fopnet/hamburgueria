@@ -20,7 +20,7 @@ const AsyncAuth = React.lazy(()=> import("./containers/Auth/Auth"));
 // const asyncAuth = asyncComponent(() => {
   //   return import("./containers/Auth/Auth");
   // });
-  
+
 const AsyncOrders = React.lazy(()=>import("./containers/Orders/Orders"));
 // const asyncOrders = asyncComponent(() => {
 //   return import("./containers/Orders/Orders");
@@ -47,21 +47,21 @@ class App extends React.Component {
           <Route path={routesPath.ORDERS_ROUTE} render={()=>(
             <Suspense fallback={<Spinner/>}>
                 <AsyncOrders  />
-            </Suspense>)} 
+            </Suspense>)}
           />
-          
+
           {/* <Route path={routesPath.CHECKOUT_ROUTE} component={asyncCheckout} /> */}
           <Route path={routesPath.CHECKOUT_ROUTE} render={()=>(
             <Suspense fallback={<Spinner/>}>
                 <AsyncCheckout  />
-            </Suspense>)} 
+            </Suspense>)}
           />
 
           {/* <Route path={routesPath.HOME_ROUTE} component={asyncBuilderBurger} /> */}
           <Route path={routesPath.HOME_ROUTE} render={()=>(
             <Suspense fallback={<Spinner/>}>
                 <AsyncBuilderBurger  />
-            </Suspense>)} 
+            </Suspense>)}
           />
 
           <Route path={routesPath.LOGOUT_ROUTE} render={(props)=><Logout {...props}/>} />
@@ -71,7 +71,7 @@ class App extends React.Component {
           <Route path={routesPath.LOGIN_ROUTE} render={()=>(
             <Suspense fallback={<Spinner/>}>
                 <AsyncAuth />
-            </Suspense>)} 
+            </Suspense>)}
           />
         </Switch>
       );
@@ -82,7 +82,7 @@ class App extends React.Component {
           <Route path={routesPath.LOGIN_ROUTE} render={()=>(
             <Suspense fallback={<Spinner/>}>
                 <AsyncAuth />
-            </Suspense>)} 
+            </Suspense>)}
           />
 
           {/* <Route path={routesPath.HOME_ROUTE} component={asyncBuilderBurger} /> */}
@@ -90,7 +90,7 @@ class App extends React.Component {
             <Suspense fallback={<Spinner/>}>
                 <AsyncBuilderBurger {...props} />
             </Suspense>
-            )} 
+            )}
           />
 
           <Redirect from="/" to={routesPath.HOME_ROUTE} />

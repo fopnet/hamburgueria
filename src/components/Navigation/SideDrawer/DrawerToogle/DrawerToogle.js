@@ -3,7 +3,7 @@ import classes from "./DrawerToggle.css";
 import PropTypes from "prop-types";
 const drawerToogle = props => {
   return (
-    <div className={classes.DrawerToggle} onClick={props.clicked}>
+    <div className={classes.DrawerToggle} onClick={props.clicked} role="button">
       <div />
       <div />
       <div />

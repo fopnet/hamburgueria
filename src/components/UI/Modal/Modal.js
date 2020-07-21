@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 // this reason is do not render OrderSummary unnecessarily
 class Modal extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps, _nextState) {
     return (
       nextProps.show !== this.props.show ||
       nextProps.children !== this.props.children

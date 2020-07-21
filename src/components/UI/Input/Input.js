@@ -27,6 +27,7 @@ const input = ( props ) => {
             break;
         case ( 'select' ):
             inputElement = (
+                // eslint-disable-next-line jsx-a11y/no-onchange
                 <select
                     className={inputClasses.join(' ')}
                     value={props.value}
@@ -49,7 +50,7 @@ const input = ( props ) => {
 
     return (
         <div className={classes.Input}>
-            <label className={classes.Label}>{props.label}</label>
+            <label className={classes.Label} htmlFor={inputElement.id ||inputElement.key}>{props.label}</label>
             {inputElement}
         </div>
     );

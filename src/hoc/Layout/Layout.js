@@ -7,8 +7,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 class Layout extends React.Component {
-  state = {
-    showSideDrawer: false,
+  state =    {
+    showSideDrawer:   false,
   };
 
   sideDrawClodedHandler = () => {

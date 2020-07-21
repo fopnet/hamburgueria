@@ -15,7 +15,7 @@ const setError = error => {
   };
 };
 
-const fecthPurchase = error => {
+const fecthPurchase = () => {
   return {
     type: actionsTypes.FETCH_PURCHASE,
   };

@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Order.css";
 
 const order = props => {
-  const summary = Object.keys(props.order.ingredients).map((key, i) => (
+  const summary = Object.keys(props.order.ingredients).map(key => (
     <span
       key={key}
       style={{

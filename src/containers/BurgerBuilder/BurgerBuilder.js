@@ -9,6 +9,7 @@ import Aux from "../../hoc/Aux/Aux";
 import withErrorHandler from "../../hoc/withErrorHandler/withErroHandler";
 import axios from "../../axios-order";
 import * as routesPath from "../../shared/routes";
+import { withRouter } from "react-router-dom";
 
 import {
   addIngredient,
@@ -23,8 +24,8 @@ class BuilderBurger extends Component {
     purchasing: false,
   };
 
-  componentDidMount() {
-    // UNSAFE_componentWillMount() {
+  // componentDidMount() {
+  UNSAFE_componentWillMount() {
     this.props.onInitIngredients();
   }
 
@@ -134,7 +135,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withErrorHandler(BuilderBurger, axios));
+)(withErrorHandler(BuilderBurger, axios)));

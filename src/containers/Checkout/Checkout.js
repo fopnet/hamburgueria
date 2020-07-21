@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import * as routesPath from "../../shared/routes";
+import { withRouter } from "react-router-dom";
 
 class Checkout extends React.Component {
   /*
@@ -79,4 +80,4 @@ const mapsStateToProps = state => {
   };
 };
 
-export default connect(mapsStateToProps)(Checkout);
+export default withRouter(connect(mapsStateToProps)(Checkout));

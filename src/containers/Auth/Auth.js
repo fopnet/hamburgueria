@@ -7,6 +7,7 @@ import { auth, setRedirectPath } from "../../store/actions/auth.action";
 import classes from "./Auth.css";
 import { Redirect } from "react-router-dom";
 import * as routesPath from "../../shared/routes";
+import { withRouter } from "react-router-dom";
 
 class Auth extends Component {
   state = {
@@ -66,7 +67,8 @@ class Auth extends Component {
     });
   };
 
-  componentDidMount() {
+  // componentDidMount() {
+  UNSAFE_componentWillMount() {
     if (
       !this.props.buiding &&
       this.props.authRedirectPath !== routesPath.HOME_ROUTE
@@ -134,7 +136,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Auth);
+)(Auth));

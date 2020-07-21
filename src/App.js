@@ -7,6 +7,7 @@ import Logout from "./containers/Auth/Logout/Logout";
 // import asyncComponent from "./hoc/asyncComponent/asyncComponent";
 import Layout from "./hoc/Layout/Layout";
 import * as routesPath from "./shared/routes";
+import { withRouter } from "react-router-dom";
 
 import "./index.css";
 
@@ -28,10 +29,12 @@ const AsyncOrders = React.lazy(()=>import("./containers/Orders/Orders"));
 const AsyncBuilderBurger = React.lazy(()=> import("./containers/BurgerBuilder/BurgerBuilder"));
 // const asyncBuilderBurger = asyncComponent(() => {
 //   return import("./containers/BurgerBuilder/BurgerBuilder");
-// });
+// });import withRouter from './components/Burger/Burger';
+
 
 class App extends React.Component {
-  componentDidMount() {
+  // componentDidMount() {
+  UNSAFE_componentWillMount() {
     this.props.onTrySignup();
   }
 
@@ -114,7 +117,7 @@ const mapDispathToProps = dispath => {
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapStarteToProps,
   mapDispathToProps,
-)(App);
+)(App));

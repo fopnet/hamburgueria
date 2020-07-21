@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { logout } from "../../../store/actions";
 import * as routesPath from "../../../shared/routes";
+import { withRouter } from "react-router-dom";
 
 class Logout extends Component {
-  componentDidMount() {
+  // componentDidMount() {
+  UNSAFE_componentWillMount() {
     this.props.onLogout();
   }
 
@@ -20,7 +22,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
+export default withRouter(connect(
   null,
   mapDispatchToProps,
-)(Logout);
+)(Logout));

@@ -7,6 +7,7 @@ import Spinner from "../../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErroHandler";
 import axios from "../../../axios-order";
 import classes from "./ContactData.css";
+import { withRouter } from "react-router-dom";
 
 class ContactData extends React.Component {
   state = {
@@ -157,7 +158,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withErrorHandler(ContactData, axios));
+)(withErrorHandler(ContactData, axios)));

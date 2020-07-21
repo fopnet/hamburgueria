@@ -5,9 +5,11 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErroHandler";
 import { fetchOrders } from "../../store/actions/index";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 class Orders extends Component {
-  componentDidMount() {
+  // componentDidMount() {
+  UNSAFE_componentWillMount() {
     this.props.onFecthOrders(this.props.token, this.props.userId);
   }
 
@@ -40,7 +42,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withErrorHandler(Orders, axios));
+)(withErrorHandler(Orders, axios)));

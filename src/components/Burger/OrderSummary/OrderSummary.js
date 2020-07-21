@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 // import Aux from "../../../hoc/Aux/Aux";
-import classes from "./OrderSummary.css";
-import Button from "../../UI/Button/Button";
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+import classes from './OrderSummary.css';
+import Button from '../../UI/Button/Button';
 
 class OrderSummary extends React.PureComponent {
   /**
@@ -10,10 +10,13 @@ class OrderSummary extends React.PureComponent {
   UNSAFE_componentWillUpdate() {
     // console.log("Summary updated");
   }
+
   render() {
-    const summary = Object.keys(this.props.ingredients).map(key => (
+    const summary = Object.keys(this.props.ingredients).map((key) => (
       <li key={key}>
-        <span style={{ textTransform: "capitalize" }}>{key}</span>:{" "}
+        <span style={{ textTransform: 'capitalize' }}>{key}</span>
+        :
+        {' '}
         {this.props.ingredients[key]}
       </li>
     ));
@@ -24,7 +27,12 @@ class OrderSummary extends React.PureComponent {
         <p>A delicious burger with folowing ingredients:</p>
         {summary}
         <p>
-          Total Price:<strong> $ {this.props.totalPrice.toFixed(2)}</strong>
+          Total Price:
+          <strong>
+            {' '}
+            $
+            {this.props.totalPrice.toFixed(2)}
+          </strong>
         </p>
         <p>Continue to Checkout ?</p>
         <Button btnType="Danger" clicked={this.props.purchaseCanceled}>

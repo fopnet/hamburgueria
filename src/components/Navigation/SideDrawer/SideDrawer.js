@@ -1,13 +1,13 @@
-import React from "react";
-import Logo from "../../Logo/Logo";
-import NavItems from "../NavigationItems/NavigationItems";
-import BackDrop from "../../UI/BackDrop/BackDrop";
-import Aux from "../../../hoc/Aux/Aux";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Logo from '../../Logo/Logo';
+import NavItems from '../NavigationItems/NavigationItems';
+import BackDrop from '../../UI/BackDrop/BackDrop';
+import Aux from '../../../hoc/Aux/Aux';
 
-import classes from "./SideDrawer.css";
-import PropTypes from "prop-types";
+import classes from './SideDrawer.css';
 
-const sideDrawer = props => {
+const sideDrawer = (props) => {
   const attachedClasses = [classes.SideDrawer];
   if (props.open) {
     attachedClasses.push(classes.Open);
@@ -18,7 +18,7 @@ const sideDrawer = props => {
   return (
     <Aux>
       <BackDrop show={props.open} clicked={props.closed} />
-      <div className={attachedClasses.join(" ")} onClick={props.closed} role="button">
+      <div className={attachedClasses.join(' ')} onClick={props.closed} role="button">
         <div className={classes.Logo}>
           <Logo />
         </div>

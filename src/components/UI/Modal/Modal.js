@@ -1,15 +1,15 @@
-import React from "react";
-import classes from "./Modal.css";
-import Aux from "../../../hoc/Aux/Aux";
-import Backdrop from "../BackDrop/BackDrop";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classes from './Modal.css';
+import Aux from '../../../hoc/Aux/Aux';
+import Backdrop from '../BackDrop/BackDrop';
 
 // this reason is do not render OrderSummary unnecessarily
 class Modal extends React.Component {
   shouldComponentUpdate(nextProps, _nextState) {
     return (
-      nextProps.show !== this.props.show ||
-      nextProps.children !== this.props.children
+      nextProps.show !== this.props.show
+      || nextProps.children !== this.props.children
     );
   }
 
@@ -24,8 +24,8 @@ class Modal extends React.Component {
         <div
           className={classes.Modal}
           style={{
-            transform: this.props.show ? "translateY(0)" : "translateY(-100vh)",
-            opacity: this.props.show ? "1" : "0",
+            transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
+            opacity: this.props.show ? '1' : '0',
           }}
         >
           {this.props.children}

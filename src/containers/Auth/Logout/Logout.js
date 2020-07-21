@@ -1,9 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
-import { logout } from "../../../store/actions";
-import * as routesPath from "../../../shared/routes";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect, withRouter } from 'react-router-dom';
+import { logout } from '../../../store/actions';
+import * as routesPath from '../../../shared/routes';
 
 class Logout extends Component {
   // componentDidMount() {
@@ -16,11 +15,9 @@ class Logout extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onLogout: () => dispatch(logout()),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  onLogout: () => dispatch(logout()),
+});
 
 export default withRouter(connect(
   null,

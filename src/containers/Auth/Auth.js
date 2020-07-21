@@ -1,24 +1,24 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import Button from "../../components/UI/Button/Button";
-import Spinner from "../../components/UI/Spinner/Spinner";
-import { createInputForm } from "../../shared/utility";
-import { auth, setRedirectPath } from "../../store/actions/auth.action";
-import classes from "./Auth.css";
-import { Redirect } from "react-router-dom";
-import * as routesPath from "../../shared/routes";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect, withRouter } from 'react-router-dom';
+
+import Button from '../../components/UI/Button/Button';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import { createInputForm } from '../../shared/utility';
+import { auth, setRedirectPath } from '../../store/actions/auth.action';
+import classes from './Auth.css';
+import * as routesPath from '../../shared/routes';
 
 class Auth extends Component {
   state = {
     loginForm: {
       email: {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          type: "email",
-          placeholder: "Your e-mail",
+          type: 'email',
+          placeholder: 'Your e-mail',
         },
-        value: "",
+        value: '',
         validation: {
           required: true,
           isEmail: true,
@@ -27,12 +27,12 @@ class Auth extends Component {
         touched: false,
       },
       password: {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          type: "password",
-          placeholder: "Password",
+          type: 'password',
+          placeholder: 'Password',
         },
-        value: "",
+        value: '',
         validation: {
           required: true,
           minLength: 6,
@@ -45,11 +45,22 @@ class Auth extends Component {
     isSignUp: false,
   };
 
+  // componentDidMount() {
+  UNSAFE_componentWillMount() {
+    if (
+      !this.props.buiding
+        && this.props.authRedirectPath !== routesPath.HOME_ROUTE
+    ) {
+      console.log('aqui');
+      this.props.onSetRedirectPath();
+    }
+  }
+
   setStateCallback = (updatedForm, formIsValid) => {
-    this.setState({ loginForm: updatedForm, formIsValid: formIsValid });
+    this.setState({ loginForm: updatedForm, formIsValid });
   };
 
-  loginHandler = event => {
+  loginHandler = (event) => {
     event.preventDefault();
 
     this.props.onAuth(
@@ -59,24 +70,11 @@ class Auth extends Component {
     );
   };
 
-  switchSignHandler = event => {
+  switchSignHandler = (event) => {
     event.preventDefault();
 
-    this.setState(prevState => {
-      return { isSignUp: !prevState.isSignUp };
-    });
+    this.setState((prevState) => ({ isSignUp: !prevState.isSignUp }));
   };
-
-  // componentDidMount() {
-  UNSAFE_componentWillMount() {
-    if (
-      !this.props.buiding &&
-      this.props.authRedirectPath !== routesPath.HOME_ROUTE
-    ) {
-      console.log("aqui");
-      this.props.onSetRedirectPath();
-    }
-  }
 
   render() {
     const inputForm = this.props.loading ? (
@@ -87,7 +85,7 @@ class Auth extends Component {
 
     let errorMessage = null;
     if (this.props.error) {
-      errorMessage = <p style={{ color: "red" }}>{this.props.error.message}</p>;
+      errorMessage = <p style={{ color: 'red' }}>{this.props.error.message}</p>;
     }
 
     let authRedirect = null;
@@ -106,10 +104,12 @@ class Auth extends Component {
           {errorMessage}
           {inputForm}
           <Button btnType="Success" disabled={!this.state.formIsValid}>
-            {this.state.isSignUp ? "SignUp" : "Sign"}
+            {this.state.isSignUp ? 'SignUp' : 'Sign'}
           </Button>
           <Button btnType="Danger" clicked={this.switchSignHandler}>
-            Switch to {this.state.isSignUp ? "SignIn" : "SignUp"}
+            Switch to
+            {' '}
+            {this.state.isSignUp ? 'SignIn' : 'SignUp'}
           </Button>
         </form>
       </div>
@@ -117,24 +117,20 @@ class Auth extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    loading: state.auth.loading,
-    error: state.auth.error,
-    isAuthenticated: state.auth.token !== null,
-    buiding: state.burgerBuilder.building,
-    authRedirectPath: state.auth.authRedirectPath,
-  };
-};
+const mapStateToProps = (state) => ({
+  loading: state.auth.loading,
+  error: state.auth.error,
+  isAuthenticated: state.auth.token !== null,
+  buiding: state.burgerBuilder.building,
+  authRedirectPath: state.auth.authRedirectPath,
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onAuth: (email, pwd, isSignUp) => {
-      dispatch(auth(email, pwd, isSignUp));
-    },
-    onSetRedirectPath: () => dispatch(setRedirectPath(routesPath.HOME_ROUTE)),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  onAuth: (email, pwd, isSignUp) => {
+    dispatch(auth(email, pwd, isSignUp));
+  },
+  onSetRedirectPath: () => dispatch(setRedirectPath(routesPath.HOME_ROUTE)),
+});
 
 export default withRouter(connect(
   mapStateToProps,

@@ -1,11 +1,11 @@
-import React from "react";
-import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
-import ContactData from "./ContactData/ContactData";
-import PropTypes from "prop-types";
-import { Route, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import * as routesPath from "../../shared/routes";
-import { withRouter } from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Route, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import * as routesPath from '../../shared/routes';
+import ContactData from './ContactData/ContactData';
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 
 class Checkout extends React.Component {
   /*
@@ -36,7 +36,7 @@ class Checkout extends React.Component {
   };
 
   checkoutContinedHandler = () => {
-    this.props.history.replace("/checkout/contact-data");
+    this.props.history.replace('/checkout/contact-data');
   };
 
   render() {
@@ -56,7 +56,7 @@ class Checkout extends React.Component {
             checkoutContinued={this.checkoutContinedHandler}
           />
           <Route
-            path={this.props.match.path + "/contact-data"}
+            path={`${this.props.match.path}/contact-data`}
             component={ContactData}
           />
         </div>
@@ -68,16 +68,14 @@ class Checkout extends React.Component {
 }
 
 Checkout.propTypes = {
-  history: PropTypes.object,
-  location: PropTypes.object,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
-const mapsStateToProps = state => {
-  return {
-    ingredients: state.burgerBuilder.ingredients,
-    totalPrice: state.burgerBuilder.totalPrice,
-    purchased: state.order.purchased,
-  };
-};
+const mapsStateToProps = (state) => ({
+  ingredients: state.burgerBuilder.ingredients,
+  totalPrice: state.burgerBuilder.totalPrice,
+  purchased: state.order.purchased,
+});
 
 export default withRouter(connect(mapsStateToProps)(Checkout));

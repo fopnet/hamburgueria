@@ -1,24 +1,24 @@
-import React from "react";
-import { connect } from "react-redux";
-import { fetchPurchase } from "../../../store/actions";
-import { createInputForm, generateFormData } from "../../../shared/utility";
-import Button from "../../../components/UI/Button/Button";
-import Spinner from "../../../components/UI/Spinner/Spinner";
-import withErrorHandler from "../../../hoc/withErrorHandler/withErroHandler";
-import axios from "../../../axios-order";
-import classes from "./ContactData.css";
-import { withRouter } from "react-router-dom";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { fetchPurchase } from '../../../store/actions';
+import { createInputForm, generateFormData } from '../../../shared/utility';
+import Button from '../../../components/UI/Button/Button';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErroHandler';
+import axios from '../../../axios-order';
+import classes from './ContactData.css';
 
 class ContactData extends React.Component {
   state = {
     orderForm: {
       name: {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Your Name",
+          type: 'text',
+          placeholder: 'Your Name',
         },
-        value: "",
+        value: '',
         validation: {
           required: true,
         },
@@ -26,12 +26,12 @@ class ContactData extends React.Component {
         touched: false,
       },
       street: {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Street",
+          type: 'text',
+          placeholder: 'Street',
         },
-        value: "",
+        value: '',
         validation: {
           required: true,
         },
@@ -39,12 +39,12 @@ class ContactData extends React.Component {
         touched: false,
       },
       zipCode: {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "ZIP Code",
+          type: 'text',
+          placeholder: 'ZIP Code',
         },
-        value: "",
+        value: '',
         validation: {
           required: true,
           minLength: 8,
@@ -55,12 +55,12 @@ class ContactData extends React.Component {
         touched: false,
       },
       country: {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Country",
+          type: 'text',
+          placeholder: 'Country',
         },
-        value: "",
+        value: '',
         validation: {
           required: true,
         },
@@ -68,12 +68,12 @@ class ContactData extends React.Component {
         touched: false,
       },
       email: {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          type: "email",
-          placeholder: "Your E-Mail",
+          type: 'email',
+          placeholder: 'Your E-Mail',
         },
-        value: "",
+        value: '',
         validation: {
           required: true,
           isEmail: true,
@@ -82,14 +82,14 @@ class ContactData extends React.Component {
         touched: false,
       },
       deliveryMethod: {
-        elementType: "select",
+        elementType: 'select',
         elementConfig: {
           options: [
-            { value: "fastest", displayValue: "Fastest" },
-            { value: "cheapest", displayValue: "Cheapest" },
+            { value: 'fastest', displayValue: 'Fastest' },
+            { value: 'cheapest', displayValue: 'Cheapest' },
           ],
         },
-        value: "",
+        value: '',
         validation: {},
         valid: true,
       },
@@ -97,7 +97,7 @@ class ContactData extends React.Component {
     formIsValid: false,
   };
 
-  orderHandler = event => {
+  orderHandler = (event) => {
     event.preventDefault();
 
     const formData = generateFormData(this.state.orderForm);
@@ -112,7 +112,7 @@ class ContactData extends React.Component {
   };
 
   setStateCallback = (updatedOrderForm, formIsValid) => {
-    this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
+    this.setState({ orderForm: updatedOrderForm, formIsValid });
   };
 
   render() {
@@ -141,22 +141,18 @@ class ContactData extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    ingredients: state.burgerBuilder.ingredients,
-    totalPrice: state.burgerBuilder.totalPrice,
-    loading: state.order.loading,
-    token: state.auth.token,
-    userId: state.auth.userId,
-  };
-};
+const mapStateToProps = (state) => ({
+  ingredients: state.burgerBuilder.ingredients,
+  totalPrice: state.burgerBuilder.totalPrice,
+  loading: state.order.loading,
+  token: state.auth.token,
+  userId: state.auth.userId,
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onFecthPurchase: (formData, ingredients, totalPrice, token, uid) =>
-      dispatch(fetchPurchase(formData, ingredients, totalPrice, token, uid)),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  onFecthPurchase: (formData, ingredients, totalPrice, token, uid) =>
+    dispatch(fetchPurchase(formData, ingredients, totalPrice, token, uid)),
+});
 
 export default withRouter(connect(
   mapStateToProps,

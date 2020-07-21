@@ -1,16 +1,14 @@
-import React from "react";
-import Input from "../components/UI/Input/Input";
+import React from 'react';
+import Input from '../components/UI/Input/Input';
 
-export const updateObject = (oldObject, updatedProperties) => {
-  return {
-    ...oldObject,
-    ...updatedProperties,
-  };
-};
+export const updateObject = (oldObject, updatedProperties) => ({
+  ...oldObject,
+  ...updatedProperties,
+});
 
-/*********************************
+/** *******************************
  * Form Methods
- **********************************/
+ ********************************* */
 
 export const checkValidity = (value, rules) => {
   let isValid = true;
@@ -19,7 +17,7 @@ export const checkValidity = (value, rules) => {
   }
 
   if (rules.required) {
-    isValid = value.trim() !== "" && isValid;
+    isValid = value.trim() !== '' && isValid;
   }
 
   if (rules.minLength) {
@@ -31,6 +29,7 @@ export const checkValidity = (value, rules) => {
   }
 
   if (rules.isEmail) {
+    // eslint-disable-next-line max-len
     const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     isValid = pattern.test(value) && isValid;
   }
@@ -43,13 +42,15 @@ export const checkValidity = (value, rules) => {
   return isValid;
 };
 
-const formElementsToArray = form => {
+const formElementsToArray = (form) => {
   const formElementsArray = [];
-  for (let key in form) {
-    formElementsArray.push({
-      id: key,
-      config: form[key],
-    });
+  for (const key in form) {
+    if (Object.prototype.hasOwnProperty.call(form, key)) {
+      formElementsArray.push({
+        id: key,
+        config: form[key],
+      });
+    }
   }
 
   return formElementsArray;
@@ -73,18 +74,20 @@ const inputChangedHandler = (
   updatedOrderForm[inputIdentifier] = updatedFormElement;
 
   let formIsValid = true;
-  for (let inputIdentifier in updatedOrderForm) {
-    formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+  for (const key in updatedOrderForm) {
+    if ({}.hasOwnProperty.call(updatedOrderForm, key)) {
+      formIsValid = updatedOrderForm[key].valid && formIsValid;
+    }
   }
   setStateCallback(updatedOrderForm, formIsValid);
 
-  //this.setState({ [formName]: updatedOrderForm, formIsValid: formIsValid });
+  // this.setState({ [formName]: updatedOrderForm, formIsValid: formIsValid });
 };
 
 export const createInputForm = (formConfig, setStateCallback) => {
   const formElementsArray = formElementsToArray(formConfig);
 
-  return formElementsArray.map(formElement => {
+  return formElementsArray.map((formElement) => {
     const updatedForm = {
       ...formConfig,
     };
@@ -98,23 +101,23 @@ export const createInputForm = (formConfig, setStateCallback) => {
         invalid={!formElement.config.valid}
         shouldValidate={formElement.config.validation}
         touched={formElement.config.touched}
-        changed={event =>
-          inputChangedHandler(
-            event,
-            formElement.id,
-            updatedForm,
-            setStateCallback,
-          )
-        }
+        changed={(event) => inputChangedHandler(
+          event,
+          formElement.id,
+          updatedForm,
+          setStateCallback,
+        )}
       />
     );
   });
 };
 
-export const generateFormData = formConfig => {
+export const generateFormData = (formConfig) => {
   const formData = {};
-  for (let formElementIdentifier in formConfig) {
-    formData[formElementIdentifier] = formConfig[formElementIdentifier].value;
+  for (const key in formConfig) {
+    if ({}.hasOwnProperty.call(formConfig, key)) {
+      formData[key] = formConfig[key].value;
+    }
   }
   return formData;
 };

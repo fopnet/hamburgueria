@@ -1,20 +1,19 @@
-import React from "react";
+import React from 'react';
 
-const asyncComponent = importComponent => {
-  return class extends React.Component {
+const asyncComponent = (importComponent) => class extends React.Component {
     state = {
       component: null,
     };
+
     // componentDidMount() {
     UNSAFE_componentWillMount() {
-      importComponent().then(cmp => this.setState({ component: cmp.default }));
+      importComponent().then((cmp) => this.setState({ component: cmp.default }));
     }
 
     render() {
       const C = this.state.component;
       return C ? <C {...this.props} /> : null;
     }
-  };
 };
 
 export default asyncComponent;

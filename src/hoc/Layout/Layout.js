@@ -1,14 +1,14 @@
-import React from "react";
-import Aux from "../Aux/Aux";
-import classes from "./Layout.css";
-import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
-import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import Aux from '../Aux/Aux';
+import classes from './Layout.css';
+import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
+import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
 class Layout extends React.Component {
-  state =    {
-    showSideDrawer:   false,
+  state = {
+    showSideDrawer: false,
   };
 
   sideDrawClodedHandler = () => {
@@ -16,7 +16,7 @@ class Layout extends React.Component {
   };
 
   toogledHandler = () => {
-    this.setState(prevState => ({ showSideDrawer: !prevState.showSideDrawer }));
+    this.setState((prevState) => ({ showSideDrawer: !prevState.showSideDrawer }));
   };
 
   render() {
@@ -37,9 +37,7 @@ class Layout extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    isAuthenticated: state.auth.token !== null,
-  };
-};
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.token !== null,
+});
 export default withRouter(connect(mapStateToProps)(Layout));

@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import BurgerControls from "../../components/Burger/BuildControls/BuildControls";
-import Burger from "../../components/Burger/Burger";
-import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
-import Modal from "../../components/UI/Modal/Modal";
-import Spinner from "../../components/UI/Spinner/Spinner";
-import Aux from "../../hoc/Aux/Aux";
-import withErrorHandler from "../../hoc/withErrorHandler/withErroHandler";
-import axios from "../../axios-order";
-import * as routesPath from "../../shared/routes";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import BurgerControls from '../../components/Burger/BuildControls/BuildControls';
+import Burger from '../../components/Burger/Burger';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import Modal from '../../components/UI/Modal/Modal';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import Aux from '../../hoc/Aux/Aux';
+import withErrorHandler from '../../hoc/withErrorHandler/withErroHandler';
+import axios from '../../axios-order';
+import * as routesPath from '../../shared/routes';
 
 import {
   addIngredient,
@@ -17,7 +17,7 @@ import {
   initIngredients,
   purchaseInit,
   setRedirectPath,
-} from "../../store/actions/index";
+} from '../../store/actions/index';
 
 class BuilderBurger extends Component {
   state = {
@@ -46,7 +46,7 @@ class BuilderBurger extends Component {
     this.props.onPurchaseInit();
     this.props.history.push(routesPath.CHECKOUT_ROUTE);
 
-    /* using redux instead    
+    /* using redux instead
     const queryParams = [];
     for (let prop in this.props.ings) {
       const q = `${encodeURIComponent(prop)}=${encodeURIComponent(
@@ -66,8 +66,10 @@ class BuilderBurger extends Component {
     const disableInfo = {
       ...this.props.ings,
     };
-    for (let key in disableInfo) {
-      disableInfo[key] = disableInfo[key] <= 0;
+    for (const key in disableInfo) {
+      if ({}.hasOwnProperty.call(disableInfo, key)) {
+        disableInfo[key] = disableInfo[key] <= 0;
+      }
     }
 
     let orderSummary = null;
@@ -116,24 +118,20 @@ class BuilderBurger extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    ings: state.burgerBuilder.ingredients,
-    totalPrice: state.burgerBuilder.totalPrice,
-    error: state.burgerBuilder.error,
-    isAuthenticated: state.auth.token !== null,
-  };
-};
+const mapStateToProps = (state) => ({
+  ings: state.burgerBuilder.ingredients,
+  totalPrice: state.burgerBuilder.totalPrice,
+  error: state.burgerBuilder.error,
+  isAuthenticated: state.auth.token !== null,
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onIngredientAdded: ingName => dispatch(addIngredient(ingName)),
-    onIngredientRemoved: ingName => dispatch(removeIngredient(ingName)),
-    onInitIngredients: () => dispatch(initIngredients()),
-    onPurchaseInit: () => dispatch(purchaseInit()),
-    onSetRedirect: path => dispatch(setRedirectPath(path)),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  onIngredientAdded: (ingName) => dispatch(addIngredient(ingName)),
+  onIngredientRemoved: (ingName) => dispatch(removeIngredient(ingName)),
+  onInitIngredients: () => dispatch(initIngredients()),
+  onPurchaseInit: () => dispatch(purchaseInit()),
+  onSetRedirect: (path) => dispatch(setRedirectPath(path)),
+});
 
 export default withRouter(connect(
   mapStateToProps,

@@ -1,19 +1,23 @@
-import React from "react";
-import classes from "./Order.css";
+import React from 'react';
+import classes from './Order.css';
 
-const order = props => {
-  const summary = Object.keys(props.order.ingredients).map(key => (
+const order = (props) => {
+  const summary = Object.keys(props.order.ingredients).map((key) => (
     <span
       key={key}
       style={{
-        textTransform: "capitalize",
-        display: "inline-block",
-        margin: "0px 8px",
-        border: "1px solid #ccc",
-        padding: "5px",
+        textTransform: 'capitalize',
+        display: 'inline-block',
+        margin: '0px 8px',
+        border: '1px solid #ccc',
+        padding: '5px',
       }}
     >
-      {key} ({props.order.ingredients[key]})
+      {key}
+      {' '}
+      (
+      {props.order.ingredients[key]}
+      )
     </span>
   ));
 
@@ -22,7 +26,12 @@ const order = props => {
       <p>Ingredients: </p>
       {summary}
       <p>
-        Price: <strong>$ {props.order.totalPrice.toFixed(2)}</strong>
+        Price:
+        {' '}
+        <strong>
+          $
+          {props.order.totalPrice.toFixed(2)}
+        </strong>
       </p>
     </div>
   );

@@ -1,43 +1,46 @@
 module.exports = {
   env: {
-    es6: true,
-    // es2020: true,
     browser: true,
-    node: true
-    // mocha: true,
+    es2020: true,
+    node: true,
+    jest: true,
   },
-  // extends: ['airbnb-base', 'prettier', 'plugin:chai-expect/recommended', 'plugin:chai-friendly/recommended'],
-  extends: ['plugin:import/warnings','plugin:jsx-a11y/recommended' , "eslint:recommended", "plugin:react/recommended" ],
-  // parser: '@typescript-eslint/parser',
-  "parser": "babel-eslint",
+  extends: [
+    'plugin:react/recommended',
+    'airbnb',
+  ],
+  parser: 'babel-eslint',
   parserOptions: {
-      ecmaVersion: 9,
-      ecmaFeatures: {
-        jsx: true
-      },
-      sourceType: "module"
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 11,
+    sourceType: 'module',
   },
-  // plugins: ['@typescript-eslint', 'prettier', 'chai-expect', 'chai-friendly'],
-  plugins: ['flowtype','import', 'jsx-a11y', "react"],
+  plugins: [
+    'react',
+  ],
   rules: {
+    'implicit-arrow-linebreak': 'off',
     'import/no-duplicates': 'off',
-    "jsx-a11y/label-has-associated-control": [ "warning", {
-      "required": {
-        "some": [ "nesting", "id"  ]
-      }
-    }],
-    "jsx-a11y/label-has-for": [ "error", {
-      "required": {
-        "some": [ "nesting", "id"  ]
-      }
-    }],
+    'jsx-a11y/label-has-associated-control': 'off',
+    'jsx-a11y/label-has-for': 'off',
     'jsx-a11y/interactive-supports-focus': 'off',
-    'jsx-a11y/click-events-have-key-events':'off',
-    "react/display-name": "off",
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'react/jsx-props-no-spreading': ['off', {
+      html: 'ignore',
+    }],
+    'max-len': ['error', { code: 120 }],
+    'react/forbid-prop-types': 'off',
+    'react/destructuring-assignment': ['off', { ignoreClassFields: true }],
+    'react/state-in-constructor': 'off',
+    'react/jsx-filename-extension': 'off',
+    'react/require-default-props': 'off',
+    'react/no-unused-prop-types': 'off',
+    'react/display-name': 'off',
     'react/no-unescaped-entities': 0,
     'react/prop-types': 0,
     'react/react-in-jsx-scope': 0,
-    "no-console": 1,
     // "jsx-a11y/rule-name": 2,
     // 'prettier/prettier': 'error',
     'class-methods-use-this': 'off',
@@ -56,37 +59,16 @@ module.exports = {
     radix: ['error', 'as-needed'],
     'no-console': 'off',
     'no-continue': 'off',
-    'import/no-unresolved': [2, {commonjs: true, amd: true}],
     // 'import/named': 2,
     // 'import/namespace': 2,
     // 'import/default': 2,
     'import/export': 2,
     'no-multi-assign': 'off',
   },
-  overrides: [
-    // {
-    //   files: ['*.ts', '*.tsx', '*.js'],
-    //   rules: {
-    //     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-    //   },
-    // },
-    {
-      files: ['migrations/*.js'],
-      rules: {
-        strict: 'off',
-      },
-    },
-  ],
   settings: {
-    'import/ignore': {
-        'pattern': 'node_modules'
-    },
-    'import/resolver': {
-      // typescript: {},
-      node: {
-      //   moduleDirectory: ['node_modules', 'src/'],
-          paths: ['src'],
-      },
+    react: {
+      pragma: 'React',
+      version: '16.13.1',
     },
   },
 };

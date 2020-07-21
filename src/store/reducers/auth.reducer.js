@@ -1,6 +1,7 @@
-import * as actionsTypes from "../actions/actions";
-import { updateObject } from "../../shared/utility";
-import * as routesPath from "../../shared/routes";
+import * as actionsTypes from '../actions/actions';
+import { updateObject } from '../../shared/utility';
+import * as routesPath from '../../shared/routes';
+
 const initialState = {
   email: null,
   loading: false,

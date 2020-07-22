@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "private": true,
-  "homepage" : "https://hamburgueria-75c22.firebaseapp.com/app",
   "dependencies": {
     "autoprefixer": "7.1.2",
     "axios": "^0.19.2",
